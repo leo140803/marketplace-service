@@ -10,17 +10,16 @@ async function bootstrap() {
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(logger);
-
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
-    options: {
-      host: '127.0.0.1',
-      port: 3000,
-    },
-  });
-
-  await app.startAllMicroservices();
+  const microservice =
+    await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+      transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3000,
+      },
+    });
   await app.listen(3000);
+  await microservice.listen();
 
   logger.log('Publisher Microservice is running on port 3000');
 }
