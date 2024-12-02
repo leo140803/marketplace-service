@@ -56,6 +56,7 @@ export class StoreController {
     let imageUrl;
 
     if (image) {
+      console.log('ada image');
       uniqueFileName = `store-${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(image.originalname)}`;
       const uploadPath = join(
         __dirname,
@@ -74,6 +75,7 @@ export class StoreController {
     }
     const longitude = parseFloat(body.longitude as any);
     const latitude = parseFloat(body.latitude as any);
+    console.log(imageUrl);
     const store = await this.storeService.create({
       store_id: storeId,
       store_name: body.store_name,

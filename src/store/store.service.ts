@@ -11,6 +11,7 @@ import Decimal from 'decimal.js';
 import { Store } from '@prisma/client';
 import { StoreValidation } from './store.validation';
 import { WebResponse } from '../model/web.model';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class StoreService {
@@ -63,8 +64,13 @@ export class StoreService {
         longitude: createRequest.longitude,
         latitude: createRequest.latitude,
         image_url: data.image_url,
+        created_at: moment().tz('Asia/Jakarta').toDate(),
       },
     });
+    console.log(moment(store.created_at).tz('Asia/Jakarta').format());
+    store.created_at = new Date(
+      moment(store.created_at).tz('Asia/Jakarta').format(),
+    );
 
     return this.toStoreResponse(store);
   }

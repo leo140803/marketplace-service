@@ -19,12 +19,34 @@ model Store {
 }
 
 model Banner {
-  banner_id String   @id @db.Uuid
-  title String @db.VarChar(255)
-  image_url String @db.VarChar(255)
-  description String @db.VarChar(255)
-  status Boolean
-  created_at DateTime @default(now())
+  banner_id   String   @id @db.Uuid
+  title       String   @db.VarChar(255)
+  image_url   String   @db.VarChar(255)
+  description String   @db.VarChar(255)
+  status      Boolean
+  created_at  DateTime @default(now())
 
   @@map("banner")
 }
+
+model GoldPrice {
+  price_id   String   @id @db.Uuid
+  price      Int
+  scraped_at DateTime @default(now())
+
+  @@map("gold_price")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  phone      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  is_verified Boolean  @default(false)
+
+  @@map("user")
+}
+
